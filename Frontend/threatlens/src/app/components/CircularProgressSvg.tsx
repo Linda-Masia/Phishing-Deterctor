@@ -11,7 +11,7 @@ interface CircularProgressSvgProps {
 
 export default function CircularProgressSvg({
   value,
-  size = 250,
+  size = 130,
   color = "#5394fd",
 }: CircularProgressSvgProps) {
   const [progress, setProgress] = useState(0);
@@ -34,7 +34,7 @@ export default function CircularProgressSvg({
     return () => cancelAnimationFrame(frame);
   }, [value]);
 
-  const strokeWidth = 20;
+  const strokeWidth = 13;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const dash = (progress / 100) * circumference;
@@ -73,10 +73,10 @@ export default function CircularProgressSvg({
           fontFamily: "Segoe UI, sans-serif",
         }}
       >
-        <div style={{ fontSize: "32px", fontWeight: "bold", color: "#333" }}>
+        <div style={{ fontSize: "28px", fontWeight: "bold", color: "#333" }}>
           {Math.round(progress)}%
         </div>
-        <div style={{ fontSize: "14px", color: "#666" }}>Confidence</div>
+        <div style={{ fontSize: "12px", color: "#666" }}>Confidence</div>
       </div>
     </div>
   );
