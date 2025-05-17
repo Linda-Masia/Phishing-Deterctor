@@ -19,7 +19,6 @@ const getConfidenceColor = (confidence: number, type?: string): string => {
   }
 };
 
-
 export default function Home() {
   const [emailText, setEmailText] = useState("");
   const [response, setResponse] = useState<{
@@ -31,7 +30,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-const resultRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -87,11 +86,11 @@ const resultRef = useRef<HTMLDivElement>(null);
   };
 
   // Scroll down when response changes
- useEffect(() => {
-  if (response && resultRef.current) {
-    resultRef.current.scrollIntoView({ behavior: "smooth" });
-  }
-}, [response]);
+  useEffect(() => {
+    if (response && resultRef.current) {
+      resultRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [response]);
 
   return (
     <div
@@ -133,6 +132,7 @@ const resultRef = useRef<HTMLDivElement>(null);
               accept=".txt"
               onChange={handleFileUpload}
               style={{ marginLeft: "1rem" }}
+              disabled={loading}
             />
           </label>
         </div>
@@ -151,9 +151,10 @@ const resultRef = useRef<HTMLDivElement>(null);
                 borderRadius: "6px",
                 border: "1px solid #ccc",
                 backgroundColor: "#fff",
-                color: "black", // Make text black
+                color: "black",
               }}
               placeholder="Paste your email content here..."
+              disabled={loading} // <-- disable textarea while loading
             />
           </label>
         </div>
@@ -200,7 +201,7 @@ const resultRef = useRef<HTMLDivElement>(null);
         )}
 
         {response && !loading && (
-          <div   ref={resultRef} style={{ marginTop: "2rem" }}>
+          <div ref={resultRef} style={{ marginTop: "2rem" }}>
             <h2 style={{ color: "#333" }}>Analysis Result</h2>
             <p>
               <strong>Status:</strong>{" "}
@@ -225,7 +226,6 @@ const resultRef = useRef<HTMLDivElement>(null);
                 color={getConfidenceColor(response.confidence, response.label)}
               />
             </div>
-
 
             <div style={{ marginTop: "1.5rem" }}>
               <h3>Highlighted Email Content and Confidence:</h3>
