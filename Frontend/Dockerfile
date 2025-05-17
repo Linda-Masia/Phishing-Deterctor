@@ -1,35 +1,30 @@
-# Install dependencies only when needed
-FROM node:24-alpine AS deps
+# Install dependencies in a builder container
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+# Copy only the app source (not the outer Dockerfile folder)
+COPY threatlens/package.json threatlens/package-lock.json ./threatlens/
+WORKDIR /app/threatlens
+
 RUN npm install
 
-# Rebuild the source code only when needed
-FROM node:24-alpine AS builder
-
-WORKDIR /app
-
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY threatlens/ ./
 
 RUN npm run build
 
-# Production image, copy all the files and run next
-FROM node:24-alpine AS runner
+# Serve the app with Next.js production server
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-ENV NODE_ENV production
+# Only copy built output and node_modules from builder
+COPY --from=builder /app/threatlens/.next .next
+COPY --from=builder /app/threatlens/public ./public
+COPY --from=builder /app/threatlens/package.json ./
+COPY --from=builder /app/threatlens/node_modules ./node_modules
 
-# Uncomment if your Next.js app uses `next/image`
-# RUN npm install sharp
-
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+ENV PORT=3000
 
 EXPOSE 3000
 
