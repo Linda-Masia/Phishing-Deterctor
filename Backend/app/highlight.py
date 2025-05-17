@@ -1,4 +1,3 @@
-import re
 import nltk
 from typing import List, Dict
 
