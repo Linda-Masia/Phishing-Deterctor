@@ -1,0 +1,14 @@
+.circular-progress {
+  display: block;
+}
+.circular-progress circle {
+  fill: none;
+  stroke-linecap: round;
+}
+.circular-progress circle.bg {
+  stroke: #ddd;
+}
+.circular-progress circle.fg {
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
