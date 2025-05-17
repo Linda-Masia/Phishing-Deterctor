@@ -1,0 +1,83 @@
+# ============================
+# Global ignores
+# ============================
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Environment files
+.env
+.env.*
+*.env.local
+*.env.production
+*.env.development
+
+# Dependency folders
+**/node_modules/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/*.egg-info/
+**/.mypy_cache/
+**/.pytest_cache/
+**/.cache/
+**/.parcel-cache/
+**/.next/
+**/dist/
+**/build/
+**/.turbo/
+
+# ============================
+# Backend (FastAPI / Python)
+# ============================
+Backend/venv/
+Backend/env/
+Backend/.venv/
+Backend/*.sqlite3
+Backend/*.db
+Backend/*.pid
+Backend/*.sock
+Backend/*.spec
+Backend/logs/
+Backend/static/
+Backend/poetry.lock
+Backend/pdm.lock
+Backend/.pdm.toml
+
+# ============================
+# FrontEnd (React / Next.js)
+# ============================
+FrontEnd/.next/
+FrontEnd/out/
+FrontEnd/.eslintcache
+FrontEnd/.tailwind.config.js
+FrontEnd/.postcssrc
+FrontEnd/*.tsbuildinfo
+FrontEnd/npm-debug.log*
+FrontEnd/yarn-debug.log*
+FrontEnd/yarn-error.log*
+FrontEnd/pnpm-debug.log*
+
+# ============================
+# Docker
+# ============================
+docker-compose.override.yml
+*.pid
+*.sock
+
+# Coverage
+coverage/
+*.coverage
+htmlcov/
