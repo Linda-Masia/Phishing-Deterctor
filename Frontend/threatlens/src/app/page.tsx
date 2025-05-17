@@ -227,24 +227,32 @@ export default function Home() {
               />
             </div>
 
-            <div style={{ marginTop: "1.5rem" }}>
-              <h3>Highlighted Email Content and Confidence:</h3>
-              <ul style={{ paddingLeft: "1rem" }}>
-                {response.explanation.map((item, index) => (
-                  <li key={index} style={{ marginBottom: "0.5rem" }}>
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        color: getConfidenceColor(item.confidence),
-                      }}
-                    >
-                      {item.phrase}
-                    </span>{" "}
-                    - Confidence: {(item.confidence * 100).toFixed(1)}%
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Only show explanation if NOT legitimate with confidence > 0.9 */}
+            {!(
+              response.label === "Legitimate" && response.confidence > 0.9
+            ) && (
+              <div style={{ marginTop: "1.5rem" }}>
+                <h3>Highlighted Email Content and Confidence:</h3>
+                <ul style={{ paddingLeft: "1rem" }}>
+                  {response.explanation.map((item, index) => (
+                    <li key={index} style={{ marginBottom: "0.5rem" }}>
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: getConfidenceColor(
+                            item.confidence,
+                            response.label
+                          ),
+                        }}
+                      >
+                        {item.phrase}
+                      </span>{" "}
+                      - Confidence: {(item.confidence * 100).toFixed(1)}%
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </div>
