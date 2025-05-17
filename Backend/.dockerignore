@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+venv/
+.env
+*.env
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# Pytest cache
+.pytest_cache/
+
+# VS Code and other IDE config
+.vscode/
+.idea/
