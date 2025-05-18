@@ -12,27 +12,19 @@ from app.model_loader import pipe
 from app.highlight import highlight_text
 from app.schemas import EmailRequest, PredictionResponse
 
-# ------------------ Setup ------------------
-
-# Rate limiter
 limiter = Limiter(key_func=get_remote_address)
-
-# Logger
 logger = logging.getLogger("uvicorn.error")
 
-# FastAPI app
+
 app = FastAPI(title="Phishing Detection API")
 app.state.limiter = limiter
 
-# Exception handler for rate limiting
 @app.exception_handler(RateLimitExceeded)
 def rate_limit_handler(request: Request, exc: RateLimitExceeded):
     return JSONResponse(
         status_code=429,
         content={"detail": "Rate limit exceeded."}
     )
-
-# Middleware for adding security headers
 class SecureHeadersMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         response = await call_next(request)
@@ -44,9 +36,7 @@ class SecureHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains; preload"
         return response
 
-# ------------------ Middleware ------------------
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "https://yourdomain.com"],
@@ -55,13 +45,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Security headers
 app.add_middleware(SecureHeadersMiddleware)
 
-# Rate limiting
 app.add_middleware(SlowAPIMiddleware)
 
-# ------------------ Routes ------------------
 
 @app.post("/predict", response_model=PredictionResponse)
 @limiter.limit("10/minute")

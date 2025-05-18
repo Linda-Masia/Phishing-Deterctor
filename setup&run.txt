@@ -1,0 +1,35 @@
+=========================
+Frontend Setup (Next.js)
+=========================
+
+1. Navigate to the frontend directory:
+   cd threatlens
+
+2. Install dependencies:
+   npm install
+
+3. Start the development server:
+   npm run dev
+
+4. Open in browser:
+   http://localhost:3000
+
+-------------------------
+
+
+=========================
+Backend Setup (Python)
+=========================
+
+1. Setup python
+
+2. Install dependencies:
+   pip install --upgrade pip
+   pip install -r requirements.txt
+
+3. Run the backend server:
+   uvicorn main:app --reload     (for FastAPI)
+
+4. Access the backend at:
+   http://localhost:8000
+
